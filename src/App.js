@@ -23,13 +23,10 @@ class App extends Component {
   componentWillMount(){
     //const rootRef = firebase.database().ref().child('react');
     const previousNotes = [].concat(this.state.rows);
-    let self = this;
     this.database.on('child_added', snap => {
       previousNotes.push({
       [snap.key]: snap.val()
       })
-
-      console.log('s');
       this.setState({
         rows: previousNotes
       })
@@ -37,7 +34,7 @@ class App extends Component {
     
   }
   passData(data){
-    this.database.push().set({data})
+    this.database.push().set(data)
     // console.log(data);
     // const cur = this.state.rows;
     // cur.push(data);
@@ -55,7 +52,7 @@ class App extends Component {
                 data-toggle="modal" 
                 data-target="#myModal">Open Modal</button>
         <Form passData={this.passData}/>
-        <Table />
+        <Table rows={this.state}/>
       </div>
     );
   }

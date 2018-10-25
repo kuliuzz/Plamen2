@@ -57,8 +57,7 @@ class Form extends Component {
         }
     }
     SubmitForm(){
-        const data = this.state;
-        this.props.passData(data);
+        this.props.passData(this.state);
         //alert(this.state.product);
     }
 

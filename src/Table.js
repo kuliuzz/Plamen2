@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import TableRow from './TableRow'
 //import $ from 'jquery';
 
 class Table extends Component{
-  state = {};
-  componentDidMount() {
-    //document.onload(alert('hello'));
+  constructor(props){
+    super(props)
+    this.state = {props};
+
   }
+
   render(){
-    var s = {color: 'white'};
     return(
         <table className="table table-sm table-hover">
           <thead className="thead-dark">
@@ -24,18 +26,14 @@ class Table extends Component{
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-danger" style={s}>
-              <th scope="row">22/10/2018</th>
-              <td>22/10/2018</td>
-              <td>Kolyo Minchev</td>
-              <td>Peev</td>
-              <td>896633150</td>
-              <td>neshto si</td>
-              <td>Week</td>
-              <td>170.00</td>
-              <td>dasdasd</td>
-            </tr>
-
+{
+  this.props.rows.rows.map((a)=>{
+    for(let as in a.data){console.log(a.data[as])}
+    
+    //return <p>{as.data.firstNames}</p>
+  })
+}
+            <TableRow passedInfo={this.state} />
           </tbody>
         </table>
     );
