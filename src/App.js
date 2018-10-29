@@ -25,22 +25,28 @@ class App extends Component {
     const previousNotes = [].concat(this.state.rows);
     this.database.on('child_added', snap => {
       previousNotes.push({
-      [snap.key]: snap.val()
+        [snap.key]: snap.val()
       })
       this.setState({
         rows: previousNotes
       })
     })
-    
+    // this.database.on('child_removed', snap => {
+    //   for (let i = 0; i < previousNotes.length; i++) {
+    //     if (previousNotes[i].id === snap.key) {
+    //       previousNotes.splice(i, 1);
+    //     }
+    //   }
+    //   this.setState({
+    //     rows: previousNotes
+    //   })
+    // })
   }
   passData(data){
     this.database.push().set(data)
-    // console.log(data);
-    // const cur = this.state.rows;
-    // cur.push(data);
-    // this.setState({
-    //   rows: cur
-    // });
+  }
+  removeRow(rowId){
+    this.database.child(rowId).remove();
   }
   render() {
     return (

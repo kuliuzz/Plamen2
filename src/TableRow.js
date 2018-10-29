@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 var s = {color: 'white'};
-const TableRow = () => {
-  return(
-    <tr className="bg-danger" style={s}>
-      <th scope="row">22/10/2018</th>
-      <td>22/10/2018</td>
-      <td>Kolyo Minchev</td>
-      <td>Peev</td>
-      <td>896633150</td>
-      <td>neshto si</td>
-      <td>Week</td>
-      <td>170.00</td>
-      <td>dasdasd</td>
-    </tr>
-  )
+
+class TableRow extends Component {
+  
+  render()
+  { console.log(this.props.hash); 
+    const x = this.props.passedInfo[this.props.hash];
+    return(
+     
+       <tr className="bg-danger" style={s}>
+          <th scope="row">{x.firstNames}</th>
+          <td>drented</td>
+          <td>{x.firstNames}</td>
+          <td>{x.lastName}</td>
+          <td>{x.firstNames}</td>
+          <td>{x.productd}</td>
+          <td>{x.period}</td>
+          <td>{x.price}</td>
+          <td>{x.note}</td>
+        </tr>
+      );
+
+    
+  }
+  
 }
-export default TableRow
+export default TableRow;

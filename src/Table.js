@@ -3,13 +3,11 @@ import TableRow from './TableRow'
 //import $ from 'jquery';
 
 class Table extends Component{
-  constructor(props){
-    super(props)
-    this.state = {props};
-
-  }
-
   render(){
+    //{ if(obb in e)console.log(e[obb])}
+    
+    
+    
     return(
         <table className="table table-sm table-hover">
           <thead className="thead-dark">
@@ -26,14 +24,13 @@ class Table extends Component{
             </tr>
           </thead>
           <tbody>
-{
-  this.props.rows.rows.map((a)=>{
-    for(let as in a.data){console.log(a.data[as])}
-    
-    //return <p>{as.data.firstNames}</p>
-  })
-}
-            <TableRow passedInfo={this.state} />
+
+            {
+              this.props.rows.rows.map((e) => {
+                return <TableRow passedInfo={e} key={Object.keys(e)} hash={Object.keys(e)[0]} />
+              })
+            }
+            
           </tbody>
         </table>
     );
