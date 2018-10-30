@@ -4,11 +4,11 @@ var s = {color: 'white'};
 class TableRow extends Component {
   
   render()
-  { console.log(this.props.hash); 
+  { //console.log(this.props.hash); 
     const x = this.props.passedInfo[this.props.hash];
     return(
      
-       <tr className="bg-danger" style={s}>
+       <tr>
           <th scope="row">{x.firstNames}</th>
           <td>drented</td>
           <td>{x.firstNames}</td>

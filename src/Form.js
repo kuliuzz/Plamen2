@@ -9,9 +9,10 @@ class Form extends Component {
             lastName: "",
             telephone: "",
             product: "",
-            period: "",
             price: "",
-            note: "",
+            period: "",
+            dateAdded: "",
+            note: "",            
             editPrice: true
         };
         this.SubmitForm = this.SubmitForm.bind(this);
@@ -20,18 +21,45 @@ class Form extends Component {
   
     Click(e){
      e.preventDefault();   
-    console.log(this.state);
+    //console.log(this.state);
     };
+    ValidateText(event){  
+        const re = /[\w]/g;
 
-    AvoidSpace(event){   
-        //console.log(event);    
-        const re = /\d/g;  
-        if (!event.key.match(re)) 
+        if (!event.key.match(re)){
             event.preventDefault();
-        this.setState({[event.target.name]: event.target.value})         
+        }else{
+            this.setState({[event.target.name]: event.target.value + event.key})         
+        }
+        if(event.key === "Backspace"){
+            this.setState({[event.target.name]: event.target.value.substring(0, event.target.value.length-1) })       
+        }
+    };
+    ValidatePhone(event){   
+        const re = /[\d]/g;
+        if (!event.key.match(re)){
+                event.preventDefault();
+        }else{
+            this.setState({[event.target.name]: event.target.value + event.key})         
+        }
+        if(event.key === "Backspace"){
+            this.setState({[event.target.name]: event.target.value.substring(0, event.target.value.length-1) })       
+        }
+    };
+    ValidatePrice(event){  
+        const re = /[\d\.]/g;
+
+        if (!event.key.match(re) || (event.key === "." && event.target.value.includes("."))){
+            event.preventDefault();
+        }else{
+            this.setState({[event.target.name]: event.target.value + event.key})         
+        }
+        if(event.key === "Backspace"){
+            this.setState({[event.target.name]: event.target.value.substring(0, event.target.value.length-1) })       
+        }
     };
 
-    SumButton(e){
+    EditPriceButton(e){
         e.preventDefault();
         this.setState({editPrice: false});
     }
@@ -57,8 +85,17 @@ class Form extends Component {
         }
     }
     SubmitForm(){
-        this.props.passData(this.state);
+        const blueprint =   /^([0-9]+(\.[0-9]+)?)/g;
+        const a = document.forms['login'].getElementsByTagName("input");
+        for (const input of a) {
+            if(!input.value || (input.id === "inputPrice" && !input.value.match(blueprint)))
+            input.className = input.className + " is-invalid";
+            console.log(input.className)
+        }
+        //if(!this.state.telephone.match(blueprint))
+        //this.props.passData(this.state);
         //alert(this.state.product);
+        console.log(a);
     }
 
 
@@ -72,7 +109,7 @@ class Form extends Component {
                 <button id="closeBtn" type="button" className="close" data-dismiss="modal">&times;</button>
             </div>
             <div className="modal-body">   
-                <form className="needs-validation" id="product-form" onSubmit={(e)=> e.preventDefault() }>
+                <form name="login" className="needs-validation" id="product-form" onSubmit={(e)=> e.preventDefault() }>
                     <div className="form-row">
                         <div className="col-md-4 mb-3">
                             <label htmlFor="firstName">First and Second name</label>
@@ -100,8 +137,9 @@ class Form extends Component {
                                 </div>
                                 <input  type="text" 
                                         name="telephone"
+                                        value={this.state.telephone}
                                         className="form-control" 
-                                        onKeyPress={(e) => this.AvoidSpace(e)} 
+                                        onKeyUp={(e) => this.ValidatePhone(e)} 
                                         id="telephoneInput" 
                                         placeholder="Enter phone number" 
                                         aria-describedby="inputGroupPrepend" 
@@ -122,8 +160,8 @@ class Form extends Component {
                         <div className="form-group col-md-4">
                             <label htmlFor="inputPeriod">Period</label>
                             <select id="inputPeriod" className="form-control" onChange={(e) => this.setState({period: e.target.value})}>
-                                <option>Week</option>
-                                <option>Month</option>
+                                <option value="week">Week</option>
+                                <option value="month">Month</option>
                             </select>
                         </div> 
                         <div className="col-md-4 mb-3">
@@ -132,11 +170,13 @@ class Form extends Component {
                                 <input  type="text"
                                         name="price" 
                                         className="form-control" 
-                                        onKeyDown={(e) => this.AvoidSpace(e)} 
+                                        onKeyUp={(e) => this.ValidatePrice(e)} 
+                                        //onChange={(e) => this.setState({price: e.target.value})}
                                         id="inputPrice" 
+                                        value={this.state.price}
                                         disabled={this.state.editPrice} />
                                 <div className="input-group-prepend">
-                                    <button className="btn btn-primary" onClick={(e)=>this.SumButton(e)} >Edit sum</button>
+                                    <button className="btn btn-primary" onClick={(e)=>this.EditPriceButton(e)} >Edit sum</button>
                                 </div>
                                 <div className="invalid-feedback">
                                     Please choose a username.
@@ -149,7 +189,6 @@ class Form extends Component {
                     </div>
                     <div className="text-center">
                         <button className="btn btn-primary col-md-4"
-                                // onClick={() => this.ResetForm()} 
                                 onClick={this.SubmitForm}
                                 >Submit form</button>
                     </div>
