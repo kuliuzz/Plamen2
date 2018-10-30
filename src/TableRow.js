@@ -10,7 +10,7 @@ class TableRow extends Component {
      
        <tr>
           <th scope="row">{x.firstNames}</th>
-          <td>drented</td>
+          <td>{x.dateAdded}</td>
           <td>{x.firstNames}</td>
           <td>{x.lastName}</td>
           <td>{x.firstNames}</td>

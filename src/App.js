@@ -62,12 +62,18 @@ class App extends Component {
       </div>
     );
   }
-  onModalPress(event){
+  // onModalPress(event){
+  //   console.log(event);
+  //   $('#myModal').on('shown.bs.modal', function () {
+  //     $('#myInput').trigger('focus')
+  //   })
+  // }
+    onModalPress(event){
     console.log(event);
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
   }
 }
-
+//.modal('show');
 export default App;

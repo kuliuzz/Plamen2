@@ -15,7 +15,7 @@ class Form extends Component {
             note: "",            
             editPrice: true
         };
-        this.SubmitForm = this.SubmitForm.bind(this);
+
       }
     
   
@@ -69,47 +69,66 @@ class Form extends Component {
     ResetForm(e){
         const modal = $(e.target).closest('#myModaal').length;
         const addBtn = $(e.target).closest('#bbb').length
+
+        this.SubmitForm = this.SubmitForm.bind(this);
+        const date = new Date();
+        const dateSubmited = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
+        this.setState({dateAdded: `${dateSubmited}`})
         
         if (!addBtn && (!modal || e.target.id === 'closeBtn') ) {
             document.getElementById("product-form").reset();
             this.setState({
                 firstNames: "",
-                lastName: "",
-                telephone: "",
-                product: "",
-                period: "",
-                price: "",
-                note: "",
-                editPrice: true
+            lastName: "",
+            telephone: "",
+            product: "",
+            price: "",
+            period: "",
+            dateAdded: "",
+            note: "",            
+            editPrice: true
             });
         }
     }
-    SubmitForm(){
-        const blueprint =   /^([0-9]+(\.[0-9]+)?)/g;
-        const a = document.forms['login'].getElementsByTagName("input");
-        for (const input of a) {
-            if(!input.value || (input.id === "inputPrice" && !input.value.match(blueprint)))
-            input.className = input.className + " is-invalid";
-            console.log(input.className)
-        }
+    SubmitForm(e){
+        
+        // const blueprint =   /^([0-9]+(\.[0-9]+)?)/g;
+        // const a = document.forms['login'].getElementsByTagName("input");
+        // for (const input of a) {
+        //     if(!input.value || (input.id === "inputPrice" && !input.value.match(blueprint)))
+        //     input.className = input.className + " is-invalid";
+        //     console.log(input.className)
+        // }
         //if(!this.state.telephone.match(blueprint))
-        //this.props.passData(this.state);
-        //alert(this.state.product);
-        console.log(a);
+        
+        this.props.passData(this.state);
+        //document.getElementById("product-form").reset();
+        this.setState({
+            firstNames: "",
+            lastName: "",
+            telephone: "",
+            product: "",
+            price: "",
+            period: "",
+            dateAdded: "",
+            note: "",            
+            editPrice: true
+        });
     }
 
 
     render(){
+        
         return(
 <div id="myModal" className="modal fade" role="dialog">
     <div id="myModaal" className="modal-dialog modal-lg">
         <div className="modal-content">
             <div className="modal-header">
                 <h4 className="modal-title">Add client</h4>
-                <button id="closeBtn" type="button" className="close" data-dismiss="modal">&times;</button>
+                <button id="closeBtn" type="button" className="close" data-dismiss="modal" onSubmit={(e) => {e.preventDefault()}}>&times;</button>
             </div>
             <div className="modal-body">   
-                <form name="login" className="needs-validation" id="product-form" onSubmit={(e)=> e.preventDefault() }>
+                <form name="login" className="needs-validation" id="product-form">
                     <div className="form-row">
                         <div className="col-md-4 mb-3">
                             <label htmlFor="firstName">First and Second name</label>
@@ -189,8 +208,9 @@ class Form extends Component {
                     </div>
                     <div className="text-center">
                         <button className="btn btn-primary col-md-4"
+                                data-dismiss="modal"
                                 onClick={this.SubmitForm}
-                                >Submit form</button>
+                        >Submit form</button>
                     </div>
                 </form>
             </div>
