@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import TableRow from './TableRow'
-//import $ from 'jquery';
-
+import $ from 'jquery';
+import 'bootstrap'; 
 class Table extends Component{
+
   editRow(data){
-     document.getElementById('myModal').classList.add("show");
-   //console.log(a);
+    // const a = data;//this.props.passedInfo[this.props.hash].dateAdded;
+    // console.log(a)
+    let a = $("#myModal").modal()
+    $(".modal-body #firstName").val( "myBookId" );
+    console.log(a)
     }
   render(){
     //{ if(obb in e)console.log(e[obb])}
@@ -17,7 +21,7 @@ class Table extends Component{
           <thead className="thead-dark">
             <tr>
               <th scope="col">Due Date</th>
-              <th scope="col">Date Rented</th>
+              <th scope="col">Date Rented</th>git 
               <th scope="col">First Names</th>
               <th scope="col">Last Name</th>
               <th scope="col">Telephone</th>
