@@ -3,6 +3,10 @@ import TableRow from './TableRow'
 //import $ from 'jquery';
 
 class Table extends Component{
+  editRow(data){
+     document.getElementById('myModal').classList.add("show");
+   //console.log(a);
+    }
   render(){
     //{ if(obb in e)console.log(e[obb])}
     
@@ -27,7 +31,12 @@ class Table extends Component{
 
             {
               this.props.rows.rows.map((e) => {
-                return <TableRow passedInfo={e} key={Object.keys(e)} hash={Object.keys(e)[0]} />
+                return <TableRow passedInfo={e} 
+                                 key={Object.keys(e)} 
+                                 hash={Object.keys(e)[0]} 
+                                 
+                                 editRow={this.editRow}
+                        />
               })
             }
             

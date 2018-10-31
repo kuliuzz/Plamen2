@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import DatePicker from 'react-date-picker';
+//import DatePicker from 'react-date-picker/dist/entry.nostyle';
 
 class Form extends Component {
     constructor(props){
@@ -13,7 +15,8 @@ class Form extends Component {
             period: "",
             dateAdded: "",
             note: "",            
-            editPrice: true
+            editPrice: true,
+            //date: new Date(),
         };
 
       }
@@ -71,9 +74,9 @@ class Form extends Component {
         const addBtn = $(e.target).closest('#bbb').length
 
         this.SubmitForm = this.SubmitForm.bind(this);
-        const date = new Date();
-        const dateSubmited = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
-        this.setState({dateAdded: `${dateSubmited}`})
+        // const date = new Date();
+        // const dateSubmited = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
+        // this.setState({dateAdded: `${dateSubmited}`})
         
         if (!addBtn && (!modal || e.target.id === 'closeBtn') ) {
             document.getElementById("product-form").reset();
@@ -116,7 +119,10 @@ class Form extends Component {
         });
     }
 
-
+    onChange(date){
+        const selectedDate = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
+        this.setState({ dateAdded: selectedDate })
+    } 
     render(){
         
         return(
@@ -205,6 +211,14 @@ class Form extends Component {
                     </div>    
                     <div className="form-group">
                         <textarea className="form-control" onChange={(e) => this.setState({note: e.target.value})} rows="5" />
+                    </div>
+                    <div className="col-md-4 mb-3">
+                    <label htmlFor="inputPrice">Date</label>
+                        <DatePicker
+                         className="input-group"
+                        onChange={(e)=>this.onChange(e)}
+                        value={this.state.date}
+                        />
                     </div>
                     <div className="text-center">
                         <button className="btn btn-primary col-md-4"

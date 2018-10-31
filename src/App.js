@@ -4,7 +4,7 @@ import 'firebase/app';
 import { DB_CONFIG } from './Database'
 import './App.css';
 import 'bootstrap';
-import $ from 'jquery'; 
+//import $ from 'jquery'; 
 import Form from './Form.js';
 import Table from './Table.js';
 
@@ -15,9 +15,11 @@ class App extends Component {
     this.app = firebase.initializeApp(DB_CONFIG);
     this.database = this.app.database().ref().child('rows');
     this.state = {
-      rows: []
+      rows: [],
+      products: []
     };
     this.passData = this.passData.bind(this);
+    //this.editRow = this.editRow.bind(this);
   }
 
   componentWillMount(){
@@ -45,6 +47,7 @@ class App extends Component {
   passData(data){
     this.database.push().set(data)
   }
+ 
   removeRow(rowId){
     this.database.child(rowId).remove();
   }
@@ -58,22 +61,17 @@ class App extends Component {
                 data-toggle="modal" 
                 data-target="#myModal">Open Modal</button>
         <Form passData={this.passData}/>
-        <Table rows={this.state}/>
+        <Table rows={this.state} />
       </div>
     );
   }
-  // onModalPress(event){
-  //   console.log(event);
-  //   $('#myModal').on('shown.bs.modal', function () {
-  //     $('#myInput').trigger('focus')
-  //   })
-  // }
-    onModalPress(event){
-    console.log(event);
-    $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-    })
+    onModalPress(){
+      document.getElementById('myModal').modal('show');
+    // console.log(event);
+    // $('#myModal').on('shown.bs.modal', function () {
+    //   $('#myInput').trigger('focus')
+    // })
   }
 }
-//.modal('show');
+
 export default App;
