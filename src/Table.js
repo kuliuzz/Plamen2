@@ -3,25 +3,36 @@ import TableRow from './TableRow'
 import $ from 'jquery';
 import 'bootstrap'; 
 class Table extends Component{
+  constructor(){
+    super();
+    //this.editRow = this.editRow.bind(this);
+  }
+  // editRow(data){
+  //   const formObject = data.passedInfo[data.hash]
+   
+  //   document.getElementById('submitBtn').setAttribute("style", "display:none;");
+  //   document.getElementById('updateBtn').setAttribute("style", "display:true;");
+  //   $(".modal-body #firstName").val( formObject.firstNames );
+  //   $(".modal-body #lastName").val( formObject.lastName );
+  //   $(".modal-body #telephoneInput").val( formObject.telephone );
+  //   $(".modal-body #inputProduct").val( formObject.product );
+  //   $(".modal-body #inputPrice").val( formObject.price );
+  //   $(".modal-body #inputPeriod").val( formObject.period );
+  //   $(".modal-body #inputDate").val( formObject.dateAdded );
+  //   $(".modal-body #noteInput").val( formObject.note );
+  //   $(".modal-body #editPrice").val( formObject.editPrice );
+  //   $("#myModal").modal()
 
-  editRow(data){
-    // const a = data;//this.props.passedInfo[this.props.hash].dateAdded;
-    // console.log(a)
-    let a = $("#myModal").modal()
-    $(".modal-body #firstName").val( "myBookId" );
-    console.log(a)
-    }
+
+  //   console.log(formObject)
+  //   }
   render(){
-    //{ if(obb in e)console.log(e[obb])}
-    
-    
-    
     return(
         <table className="table table-sm table-hover">
           <thead className="thead-dark">
             <tr>
               <th scope="col">Due Date</th>
-              <th scope="col">Date Rented</th>git 
+              <th scope="col">Date Rented</th> 
               <th scope="col">First Names</th>
               <th scope="col">Last Name</th>
               <th scope="col">Telephone</th>

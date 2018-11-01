@@ -4,7 +4,7 @@ import 'firebase/app';
 import { DB_CONFIG } from './Database'
 import './App.css';
 import 'bootstrap';
-//import $ from 'jquery'; 
+import $ from 'jquery'; 
 import Form from './Form.js';
 import Table from './Table.js';
 
@@ -19,10 +19,12 @@ class App extends Component {
       products: []
     };
     this.passData = this.passData.bind(this);
-    //this.editRow = this.editRow.bind(this);
+    this.updateRow = this.updateRow.bind(this);
+    //this.toggleSubmitUpdate = this.toggleSubmitUpdate.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
+
     //const rootRef = firebase.database().ref().child('react');
     const previousNotes = [].concat(this.state.rows);
     this.database.on('child_added', snap => {
@@ -33,24 +35,36 @@ class App extends Component {
         rows: previousNotes
       })
     })
-    // this.database.on('child_removed', snap => {
-    //   for (let i = 0; i < previousNotes.length; i++) {
-    //     if (previousNotes[i].id === snap.key) {
-    //       previousNotes.splice(i, 1);
-    //     }
-    //   }
-    //   this.setState({
-    //     rows: previousNotes
-    //   })
-    // })
+  }
+  updateRow(rowData){
+    const db = firebase.database().ref();
+    const data = {
+      firstNames: rowData.firstNames,
+      lastName: rowData.firstNames,
+      telephone: rowData.firstNames,
+      product: rowData.firstNames,
+      price: rowData.firstNames,
+      period: rowData.firstNames,
+      dateAdded: rowData.firstNames,
+      note: rowData.firstNames,            
+      editPrice: rowData.firstNamesue
+    }
+    db.child(`rows/${rowData.hash}`).update(data);
   }
   passData(data){
     this.database.push().set(data)
   }
- 
   removeRow(rowId){
     this.database.child(rowId).remove();
   }
+  onModalPress(){
+    document.getElementById('submitBtn').setAttribute("style", "display:true;");
+    document.getElementById('updateBtn').setAttribute("style", "display:none;");
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -60,17 +74,10 @@ class App extends Component {
                 onClick={this.onModalPress} 
                 data-toggle="modal" 
                 data-target="#myModal">Open Modal</button>
-        <Form passData={this.passData}/>
+        <Form passData={this.passData} updateRow={this.updateRow}/>
         <Table rows={this.state} />
       </div>
     );
-  }
-    onModalPress(){
-      document.getElementById('myModal').modal('show');
-    // console.log(event);
-    // $('#myModal').on('shown.bs.modal', function () {
-    //   $('#myInput').trigger('focus')
-    // })
   }
 }
 

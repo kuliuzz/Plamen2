@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 var s = {color: 'white'};
 
 class TableRow extends Component {
-
+  componentDidMount(){
+    console.log("dd")
+  }
   render()
   { 
     const x = this.props.passedInfo[this.props.hash];
+    const propsReturned = this.props;
     return(    
-       <tr onDoubleClick={this.props.editRow}>
+       <tr onDoubleClick={() => this.props.editRow(propsReturned)}>
           <th scope="row">{x.firstNames}</th>
           <td>{x.dateAdded}</td>
           <td>{x.firstNames}</td>

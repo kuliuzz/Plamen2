@@ -7,20 +7,35 @@ class Form extends Component {
     constructor(props){
         super(props);
         this.state = {
-            firstNames: "",
-            lastName: "",
-            telephone: "",
-            product: "",
-            price: "",
-            period: "",
-            dateAdded: "",
-            note: "",            
-            editPrice: true,
+            // firstNames: "",
+            // lastName: "",
+            // telephone: "",
+            // product: "",
+            // price: "",
+            // period: "",
+            // dateAdded: "",
+            // note: "",            
+            // editPrice: true,
             //date: new Date(),
-        };
-
-      }
-    
+            };
+        }
+    componentDidMount() {
+    //document.addEventListener('mouseup', this.ResetForm.bind(this));
+    let a = $(".modal-body #firstName").val()
+    console.log(a)
+    this.setState({
+        firstNames: $(".modal-body #firstNames").val()
+    })
+   
+    // $(".modal-body #lastName").val();
+    // $(".modal-body #telephoneInput").val();
+    // $(".modal-body #inputProduct").val();
+    // $(".modal-body #inputPrice").val();
+    // $(".modal-body #inputPeriod").val();
+    // $(".modal-body #inputDate").val();
+    // $(".modal-body #noteInput").val();
+    // $(".modal-body #editPrice").val();
+    }
   
     Click(e){
      e.preventDefault();   
@@ -66,13 +81,12 @@ class Form extends Component {
         e.preventDefault();
         this.setState({editPrice: false});
     }
-    componentDidMount() {
-        document.addEventListener('mouseup', this.ResetForm.bind(this));
-      }
+    
     ResetForm(e){
         const modal = $(e.target).closest('#myModaal').length;
         const addBtn = $(e.target).closest('#bbb').length
-
+        // document.getElementById('submitBtn').setAttribute("style", "display:true;");
+        // document.getElementById('updateBtn').setAttribute("style", "display:true;");
         this.SubmitForm = this.SubmitForm.bind(this);
         // const date = new Date();
         // const dateSubmited = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
@@ -82,30 +96,19 @@ class Form extends Component {
             document.getElementById("product-form").reset();
             this.setState({
                 firstNames: "",
-            lastName: "",
-            telephone: "",
-            product: "",
-            price: "",
-            period: "",
-            dateAdded: "",
-            note: "",            
-            editPrice: true
+                lastName: "",
+                telephone: "",
+                product: "",
+                price: "",
+                period: "",
+                dateAdded: "",
+                note: "",            
+                editPrice: true
             });
         }
     }
-    SubmitForm(e){
-        
-        // const blueprint =   /^([0-9]+(\.[0-9]+)?)/g;
-        // const a = document.forms['login'].getElementsByTagName("input");
-        // for (const input of a) {
-        //     if(!input.value || (input.id === "inputPrice" && !input.value.match(blueprint)))
-        //     input.className = input.className + " is-invalid";
-        //     console.log(input.className)
-        // }
-        //if(!this.state.telephone.match(blueprint))
-        
+    SubmitForm(){
         this.props.passData(this.state);
-        //document.getElementById("product-form").reset();
         this.setState({
             firstNames: "",
             lastName: "",
@@ -117,6 +120,23 @@ class Form extends Component {
             note: "",            
             editPrice: true
         });
+    }
+    UpdateFormRow(){
+
+ 
+        
+        this.setState({
+            firstNames: $(".modal-body #firstName").val(),
+            lastName: $(".modal-body #lastName").val(),
+            telephone: "",
+            product: "",
+            price: "",
+            period: "",
+            dateAdded: "",
+            note: "",            
+            editPrice: true
+        });
+        //this.props.updateRow(this.state);
     }
 
     onChange(date){
@@ -210,21 +230,28 @@ class Form extends Component {
                         </div>
                     </div>    
                     <div className="form-group">
-                        <textarea className="form-control" onChange={(e) => this.setState({note: e.target.value})} rows="5" />
+                        <textarea className="form-control" id="txtA" onChange={(e) => this.setState({note: e.target.value})} rows="5" />
                     </div>
                     <div className="col-md-4 mb-3">
-                    <label htmlFor="inputPrice">Date</label>
+                    <label htmlFor="inputDate">Date</label>
                         <DatePicker
-                         className="input-group"
+                        id="inputDate"
+                        className="input-group"
                         onChange={(e)=>this.onChange(e)}
                         value={this.state.date}
                         />
                     </div>
                     <div className="text-center">
                         <button className="btn btn-primary col-md-4"
+                                id="submitBtn"
                                 data-dismiss="modal"
                                 onClick={this.SubmitForm}
                         >Submit form</button>
+                        <button className="btn btn-warning col-md-4"
+                                id="updateBtn"
+                                data-dismiss="modal"
+                                onClick={this.UpdateFormRow}
+                        >Update</button>
                     </div>
                 </form>
             </div>
