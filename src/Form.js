@@ -7,25 +7,26 @@ class Form extends Component {
     constructor(props){
         super(props);
         this.state = {
-            // firstNames: "",
-            // lastName: "",
-            // telephone: "",
-            // product: "",
-            // price: "",
-            // period: "",
-            // dateAdded: "",
-            // note: "",            
-            // editPrice: true,
-            //date: new Date(),
+            firstNames: "",
+            lastName: "",
+            telephone: "",
+            product: "",
+            price: "",
+            period: "",
+            dateAdded: "",
+            note: "",            
+            editPrice: true,
+            date: new Date(),
             };
         }
     componentDidMount() {
-    //document.addEventListener('mouseup', this.ResetForm.bind(this));
-    let a = $(".modal-body #firstName").val()
-    console.log(a)
-    this.setState({
-        firstNames: $(".modal-body #firstNames").val()
-    })
+    document.addEventListener('mouseup', this.ResetForm.bind(this));
+    //these lines are update functionality in progress
+    // let a = $(".modal-body #firstName").val()
+    // console.log(a)
+    // this.setState({
+    //     firstNames: $(".modal-body #firstNames").val()
+    // })
    
     // $(".modal-body #lastName").val();
     // $(".modal-body #telephoneInput").val();
@@ -37,9 +38,8 @@ class Form extends Component {
     // $(".modal-body #editPrice").val();
     }
   
-    Click(e){
-     e.preventDefault();   
-    //console.log(this.state);
+    Click(){
+        document.getElementById("firstName").classList.remove('is-invalid');
     };
     ValidateText(event){  
         const re = /[\w]/g;
@@ -83,7 +83,7 @@ class Form extends Component {
     }
     
     ResetForm(e){
-        const modal = $(e.target).closest('#myModaal').length;
+        const modal = $(e.target).closest('#myModal').length;
         const addBtn = $(e.target).closest('#bbb').length
         // document.getElementById('submitBtn').setAttribute("style", "display:true;");
         // document.getElementById('updateBtn').setAttribute("style", "display:true;");
@@ -108,36 +108,55 @@ class Form extends Component {
         }
     }
     SubmitForm(){
-        this.props.passData(this.state);
-        this.setState({
-            firstNames: "",
-            lastName: "",
-            telephone: "",
-            product: "",
-            price: "",
-            period: "",
-            dateAdded: "",
-            note: "",            
-            editPrice: true
-        });
-    }
-    UpdateFormRow(){
+        let x = document.forms['login']
+        for (let i = 0; i < x.length; i++) {
+            let as = x.elements[i];
+            
+            if(as.hasAttribute('required') && !as.value ){
+                console.log("kkkkkk")
+                as.classList.add("is-invalid");
+            }
+            //console.log(as)
 
- 
+            // if(x[i].id === "firstName"){
+            //     x[i].style
+        }
         
-        this.setState({
-            firstNames: $(".modal-body #firstName").val(),
-            lastName: $(".modal-body #lastName").val(),
-            telephone: "",
-            product: "",
-            price: "",
-            period: "",
-            dateAdded: "",
-            note: "",            
-            editPrice: true
-        });
-        //this.props.updateRow(this.state);
+        // $(".modal").on("hidden.bs.modal", function(){
+        //     $(".modal-body1").html("");
+        // });
+        //document.getElementById("product-form").reset();
+
+
+
+
+        // this.props.passData(this.state);
+        // this.setState({
+        //     firstNames: "",
+        //     lastName: "",
+        //     telephone: "",
+        //     product: "",
+        //     price: "",
+        //     period: "",
+        //     dateAdded: "",
+        //     note: "",            
+        //     editPrice: true
+        // });
     }
+    // UpdateFormRow(){
+    //     this.setState({
+    //         firstNames: $(".modal-body #firstName").val(),
+    //         lastName: $(".modal-body #lastName").val(),
+    //         telephone: "",
+    //         product: "",
+    //         price: "",
+    //         period: "",
+    //         dateAdded: "",
+    //         note: "",            
+    //         editPrice: true
+    //     });
+    //     //this.props.updateRow(this.state);
+    // }
 
     onChange(date){
         const selectedDate = date.getMonth() + "/" +  date.getUTCDate() + "/" + date.getFullYear();
@@ -160,7 +179,8 @@ class Form extends Component {
                             <label htmlFor="firstName">First and Second name</label>
                             <input  type="text" 
                                     className="form-control"
-                                    onChange={e => this.setState({firstNames: e.target.value})} 
+                                    onChange={e => this.setState({firstNames: e.target.value})}
+                                    onKeyUp={() => this.Click()}
                                     id="firstName" 
                                     placeholder="Enter names" 
                                     required />
@@ -195,8 +215,9 @@ class Form extends Component {
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label htmlFor="inputProduct">Product</label>
-                            <select id="inputProduct" className="form-control" onChange={(e) => this.setState({product: e.target.value})}>
-                                <option value="1">Product 1</option>
+                            <select id="inputProduct" className="form-control" onChange={(e) => this.setState({product: e.target.value})} required>
+                                <option value=""disabled selected hidden>Select product</option>
+                                <option value="1">Product 1</option>                           
                                 <option value="2">Product 2</option>
                                 <option value="3">Product 3</option>
                                 <option value="4">Product 4</option>
@@ -204,7 +225,8 @@ class Form extends Component {
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="inputPeriod">Period</label>
-                            <select id="inputPeriod" className="form-control" onChange={(e) => this.setState({period: e.target.value})}>
+                            <select id="inputPeriod" className="form-control" onChange={(e) => this.setState({period: e.target.value})} required>
+                            <option value=""disabled selected hidden>Select period</option>
                                 <option value="week">Week</option>
                                 <option value="month">Month</option>
                             </select>
@@ -219,7 +241,8 @@ class Form extends Component {
                                         //onChange={(e) => this.setState({price: e.target.value})}
                                         id="inputPrice" 
                                         value={this.state.price}
-                                        disabled={this.state.editPrice} />
+                                        disabled={this.state.editPrice} 
+                                        required/>
                                 <div className="input-group-prepend">
                                     <button className="btn btn-primary" onClick={(e)=>this.EditPriceButton(e)} >Edit sum</button>
                                 </div>
@@ -239,19 +262,19 @@ class Form extends Component {
                         className="input-group"
                         onChange={(e)=>this.onChange(e)}
                         value={this.state.date}
-                        />
+                         />
                     </div>
                     <div className="text-center">
                         <button className="btn btn-primary col-md-4"
                                 id="submitBtn"
-                                data-dismiss="modal"
-                                onClick={this.SubmitForm}
+                                //data-dismiss="modal"
+                                onClick={(e) => this.SubmitForm(e)}
                         >Submit form</button>
-                        <button className="btn btn-warning col-md-4"
+                        {/* <button className="btn btn-warning col-md-4"
                                 id="updateBtn"
                                 data-dismiss="modal"
                                 onClick={this.UpdateFormRow}
-                        >Update</button>
+                        >Update</button> */}
                     </div>
                 </form>
             </div>

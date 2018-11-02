@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 var s = {color: 'white'};
 
 class TableRow extends Component {
-  componentDidMount(){
-    console.log("dd")
-  }
+  // componentDidMount(){
+  //   console.log("dd")
+  // }
   render()
   { 
     const x = this.props.passedInfo[this.props.hash];

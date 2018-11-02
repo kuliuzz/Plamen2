@@ -19,7 +19,7 @@ class App extends Component {
       products: []
     };
     this.passData = this.passData.bind(this);
-    this.updateRow = this.updateRow.bind(this);
+    //this.updateRow = this.updateRow.bind(this);
     //this.toggleSubmitUpdate = this.toggleSubmitUpdate.bind(this);
   }
 
@@ -36,21 +36,21 @@ class App extends Component {
       })
     })
   }
-  updateRow(rowData){
-    const db = firebase.database().ref();
-    const data = {
-      firstNames: rowData.firstNames,
-      lastName: rowData.firstNames,
-      telephone: rowData.firstNames,
-      product: rowData.firstNames,
-      price: rowData.firstNames,
-      period: rowData.firstNames,
-      dateAdded: rowData.firstNames,
-      note: rowData.firstNames,            
-      editPrice: rowData.firstNamesue
-    }
-    db.child(`rows/${rowData.hash}`).update(data);
-  }
+  // updateRow(rowData){
+  //   const db = firebase.database().ref();
+  //   const data = {
+  //     firstNames: rowData.firstNames,
+  //     lastName: rowData.firstNames,
+  //     telephone: rowData.firstNames,
+  //     product: rowData.firstNames,
+  //     price: rowData.firstNames,
+  //     period: rowData.firstNames,
+  //     dateAdded: rowData.firstNames,
+  //     note: rowData.firstNames,            
+  //     editPrice: rowData.firstNamesue
+  //   }
+  //   db.child(`rows/${rowData.hash}`).update(data);
+  // }
   passData(data){
     this.database.push().set(data)
   }
@@ -58,8 +58,8 @@ class App extends Component {
     this.database.child(rowId).remove();
   }
   onModalPress(){
-    document.getElementById('submitBtn').setAttribute("style", "display:true;");
-    document.getElementById('updateBtn').setAttribute("style", "display:none;");
+    // document.getElementById('submitBtn').setAttribute("style", "display:true;");
+    // document.getElementById('updateBtn').setAttribute("style", "display:none;");
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })
@@ -74,7 +74,9 @@ class App extends Component {
                 onClick={this.onModalPress} 
                 data-toggle="modal" 
                 data-target="#myModal">Open Modal</button>
-        <Form passData={this.passData} updateRow={this.updateRow}/>
+        <Form passData={this.passData} 
+              //updateRow={this.updateRow}
+              />
         <Table rows={this.state} />
       </div>
     );
