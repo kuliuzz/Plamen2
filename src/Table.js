@@ -4,7 +4,7 @@ import $ from 'jquery';
 import 'bootstrap'; 
 class Table extends Component{
   constructor(){
-    super();
+    super(props);
     //this.editRow = this.editRow.bind(this);
   }
   // editRow(data){
